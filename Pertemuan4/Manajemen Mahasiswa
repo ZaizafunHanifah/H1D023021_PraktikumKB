@@ -1,0 +1,69 @@
+import random
+import datetime  # Tambahan library kedua
+
+mahasiswa_list = []
+
+"""struktur data"""
+def konversi_nilai(nilai):
+    if nilai >= 80:
+        return "A"
+    elif nilai >= 70:
+        return "B"
+    elif nilai >= 60:
+        return "C"
+    elif nilai >= 50:
+        return "D"
+    else:
+        return "E"
+
+def tambah_mahasiswa():
+    nama = input("Masukkan nama mahasiswa: ")
+    nim = input("Masukkan NIM: ")
+    nilai = input("Masukkan nilai angka : ")
+
+    nilai_list = [int(n) for n in nilai.split(",")]
+    
+    nilai_huruf = [konversi_nilai(n) for n in nilai_list]
+
+    mahasiswa = {
+        "id": random.randint(1000, 9999),
+        "nama": nama,
+        "nim": nim,
+        "nilai_angka": nilai_list,
+        "nilai_huruf": nilai_huruf,
+        "tanggal_input": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") 
+    }
+
+    mahasiswa_list.append(mahasiswa)
+    print(f"Mahasiswa {nama} berhasil ditambahkan!\n")
+
+def lihat_mahasiswa():
+    if len(mahasiswa_list) == 0:
+        print("Belum ada data mahasiswa.\n")
+    else:
+        print("\nDaftar Mahasiswa dan Nilai:")
+        for mhs in mahasiswa_list:
+            print(f"[{mhs['id']}] {mhs['nama']} (NIM: {mhs['nim']})")
+            print(f"   Nilai Angka: {mhs['nilai_angka']}")
+            print(f"   Nilai Huruf: {mhs['nilai_huruf']}")
+            print(f"   Tanggal Input: {mhs['tanggal_input']}")
+        print()
+
+def menu():
+    print("=== Sistem Penilaian Mahasiswa ===")
+    print("1. Tambah Mahasiswa")
+    print("2. Lihat Daftar Mahasiswa")
+    
+    pilihan = input("Pilih menu: ")
+
+    if pilihan == "1":
+        tambah_mahasiswa()
+        menu()
+    elif pilihan == "2":
+        lihat_mahasiswa()
+        menu()
+    else:
+        print("Pilihan tidak valid! Silakan coba lagi.\n")
+        menu()
+
+menu()
